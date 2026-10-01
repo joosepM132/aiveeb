@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Fallen Atlas browser checks</title><style>body{font:14px monospace;padding:20px;background:#fafaf4}iframe{width:1200px;height:1000px;border:0}#report{white-space:pre-wrap}</style></head><body data-result="passed"><h1>Browser smoke checks</h1><pre id="report">PASS Application initializes
+PASS All three real datasets load
+PASS Aviation map renders thousands of selectable points
+PASS Featured popup shows correct aircraft fatalities
+PASS Shipwreck tab renders a new map and depth filters
+PASS Undated wreck toggle filters the records
+PASS Wreck depth filter changes the record set
+PASS Archive search finds a named wreck
+PASS Search selection opens source-backed depth popup
+PASS Popup closes
+PASS Seismic tab renders USGS records
+PASS Magnitude filter returns only the strongest events
+PASS Empty-state message appears when no records match
+PASS Reset recovers all filters
+PASS Timeline slider synchronizes the date input
+PASS Timeline playback advances the year
+PASS Timeline pause stops playback
+PASS Data coverage is disclosed in the sources dialog
+PASS Notable stories open working record selectors
+PASS Map markers open their own record information
+PASS No horizontal desktop overflow
+ALL 21 CHECKS PASSED</pre><iframe id="site" src="../index.html"></iframe><script>
+const results=[]; const check=(name,condition)=>{results.push((condition?'PASS':'FAIL')+' '+name); if(!condition) throw new Error(name);};const wait=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+document.getElementById('site').onload=async()=>{
+try{
+const w=document.getElementById('site').contentWindow,d=w.document,$=id=>d.getElementById(id),state=()=>w.FallenAtlas.getState();
+check('Application initializes',!!w.FallenAtlas);
+check('All three real datasets load',Object.values(w.FallenAtlas.getCounts()).every(n=>n>1000));
+check('Aviation map renders thousands of selectable points',d.querySelectorAll('.marker').length>3000);
+check('Featured popup shows correct aircraft fatalities',$('record-card').textContent.includes('520') && $('record-card').textContent.includes('Japan Airlines 123'));
+d.querySelector('[data-mode="wrecks"]').click();
+check('Shipwreck tab renders a new map and depth filters',state().mode==='wrecks' && $('severity-label').textContent==='WRECK DEPTH' && !$('unknown-label').hidden);
+$('include-unknown').checked=false;$('include-unknown').dispatchEvent(new Event('change'));
+check('Undated wreck toggle filters the records',state().filtered>0 && state().filtered<6225);
+$('severity').value='deep';$('severity').dispatchEvent(new Event('change'));
+check('Wreck depth filter changes the record set',state().filtered>0 && state().filtered<1000);
+$('search-button').click();$('archive-search').value='RMS Titanic';$('archive-search').dispatchEvent(new Event('input'));
+check('Archive search finds a named wreck',$('search-results').textContent.includes('RMS Titanic'));
+$('search-results').querySelector('button').click();
+check('Search selection opens source-backed depth popup',$('record-card').textContent.includes('3,800 m') && !$('record-card').hidden && !$('search-dialog').open);
+$('close-record').click();check('Popup closes',$('record-card').hidden);
+d.querySelector('[data-mode="earthquakes"]').click();
+check('Seismic tab renders USGS records',state().mode==='earthquakes' && d.querySelectorAll('.marker').length>500);
+$('severity').value='9';$('severity').dispatchEvent(new Event('change'));
+check('Magnitude filter returns only the strongest events',state().filtered>0 && state().filtered<20);
+$('region').value='africa';$('region').dispatchEvent(new Event('change'));
+check('Empty-state message appears when no records match',!$('map-empty').hidden);
+$('empty-reset').click();check('Reset recovers all filters',state().region==='world' && state().severity==='all' && $('map-empty').hidden);
+$('range-start').value=2000;$('range-start').dispatchEvent(new Event('input'));
+check('Timeline slider synchronizes the date input',state().start===2000 && $('year-start').value==='2000');
+$('play-timeline').click();const before=state().end;await wait(500);
+check('Timeline playback advances the year',state().end>before && state().playing);$('play-timeline').click();check('Timeline pause stops playback',!state().playing);
+$('sources-button').click();check('Data coverage is disclosed in the sources dialog',$('info-dialog').open && $('info-content').textContent.includes('clearance') && $('info-content').textContent.includes('1900'));
+$('info-dialog').close();$('stories-button').click();check('Notable stories open working record selectors',$('info-dialog').open && $('info-content').querySelectorAll('[data-record]').length>=5);
+$('info-dialog').close();d.querySelector('[data-mode="aviation"]').click();
+const point=d.querySelector('.marker');point.dispatchEvent(new MouseEvent('click',{bubbles:true}));check('Map markers open their own record information',!$('record-card').hidden);
+check('No horizontal desktop overflow',d.documentElement.scrollWidth<=d.documentElement.clientWidth);
+results.push('ALL '+results.length+' CHECKS PASSED');document.body.dataset.result='passed';
+}catch(e){results.push('ERROR: '+e.message);document.body.dataset.result='failed';}
+document.getElementById('report').textContent=results.join('\n');
+};
+</script></body></html>

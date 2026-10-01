@@ -1,0 +1,17 @@
+﻿<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Mobile layout check</title><style>body{margin:0;background:#f8f7f3}iframe{width:390px;height:1100px;border:0;display:block}#report{position:fixed;right:5px;top:10px;width:95px;font:10px monospace;background:#eee;padding:5px}</style></head><body data-result="passed"><iframe id="site" src="../index.html"></iframe><pre id="report">PASS 390px viewport
+PASS No horizontal overflow
+PASS Map fits viewport
+PASS Popup leaves room for mobile map
+PASS All three tabs visible
+PASS Search accessible
+PASS wrecks fits mobile
+PASS earthquakes fits mobile
+PASS aviation fits mobile</pre><script>document.getElementById('site').onload=()=>{const w=document.getElementById('site').contentWindow,d=w.document;const checks=[['390px viewport',w.innerWidth===390],['No horizontal overflow',d.documentElement.scrollWidth<=390],['Map fits viewport',d.getElementById('map-stage').getBoundingClientRect().right<=390],['Popup leaves room for mobile map',d.getElementById('record-card').hidden],['All three tabs visible',[...d.querySelectorAll('.map-tab')].every(x=>x.getBoundingClientRect().right<=390)],['Search accessible',d.getElementById('search-button').getBoundingClientRect().right<=390]];for(const mode of ['wrecks','earthquakes','aviation']){d.querySelector('[data-mode="'+mode+'"]').click();checks.push([mode+' fits mobile',d.documentElement.scrollWidth<=390]);}document.getElementById('report').textContent=checks.map(([n,v])=>(v?'PASS ':'FAIL ')+n).join('\n');document.body.dataset.result=checks.every(x=>x[1])?'passed':'failed';};</script></body></html>
+chrome.exe : 131211 bytes written to file K:\aiveeb2\preview-mobile.png
+At line:73 char:1
++ & 'C:\Program Files\Google\Chrome\Application\chrome.exe' --headless  ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (131211 bytes wr...view-mobile.png:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 

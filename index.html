@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f5f4ef"><meta name="description" content="Explore the marks history leaves behind. An interactive atlas of aviation incidents, shipwrecks, and the world's strongest earthquakes.">
+<title>Fallen Atlas — History leaves a mark.</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<svg class="icon-library" xmlns="http://www.w3.org/2000/svg"><defs>
+<symbol id="i-plane" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4L22 2ZM11 13l11-11"/></symbol>
+<symbol id="i-ship" viewBox="0 0 24 24"><path d="M12 3v13M8 6h8v7l5 3-3 4H6l-3-4 5-3V6ZM3 22c2-2 4 2 6 0s4 2 6 0 4 2 6 0"/></symbol>
+<symbol id="i-quake" viewBox="0 0 24 24"><path d="M2 12h4l3-7 4 14 3-10 2 3h4"/></symbol>
+<symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
+<symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/></symbol>
+<symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v1"/></symbol>
+<symbol id="i-reset" viewBox="0 0 24 24"><path d="M3 10a9 9 0 1 1 2 8M3 4v6h6"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+<symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+<symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+<symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 3 10 6-10 6L2 9l10-6Zm-10 12 10 6 10-6M2 12l10 6 10-6"/></symbol>
+<symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2"/><path d="M12 1v4m0 14v4M1 12h4m14 0h4"/></symbol>
+</defs></svg>
+<header class="site-header">
+<a class="brand" href="./" aria-label="Fallen Atlas home"><span class="brand-mark"><svg viewBox="0 0 40 40"><path d="M14 3H3v11M26 3h11v11M3 26v11h11M37 26v11H26"/><circle cx="20" cy="20" r="10"/><path d="m24 15-3 8-6 2 3-8Z"/></svg></span><span>FALLEN<span class="brand-light">ATLAS</span><span class="brand-dot">®</span></span></a>
+<nav class="header-nav" aria-label="Main navigation"><a class="active" href="#explore">Explore the atlas <span></span></a><button id="stories-button">Notable stories</button><button id="about-button">About the project <svg class="icon"><use href="#i-arrow"/></svg></button></nav>
+<button class="header-search" id="search-button" aria-label="Search the archive"><svg class="icon"><use href="#i-search"/></svg><span>Search the archive</span><kbd>/</kbd></button>
+</header>
+<main id="explore">
+<section class="intro"><div><div class="eyebrow"><span class="small-cross">✳</span> A DIFFERENT PERSPECTIVE ON OUR PLANET</div><h1>History leaves a mark<span>.</span></h1></div><p>Extraordinary events. Unforgettable stories.<br>Explore the world through what it’s left behind.</p></section>
+<div class="atlas-top"><div class="map-tabs" role="tablist" aria-label="Atlas layers"><button class="map-tab active" role="tab" aria-selected="true" data-mode="aviation"><svg class="icon"><use href="#i-plane"/></svg>Aviation incidents<span class="tab-count" id="air-count">—</span></button><button class="map-tab" role="tab" aria-selected="false" data-mode="wrecks"><svg class="icon"><use href="#i-ship"/></svg>Shipwrecks<span class="tab-count" id="wreck-count">—</span></button><button class="map-tab" role="tab" aria-selected="false" data-mode="earthquakes"><svg class="icon"><use href="#i-quake"/></svg>Seismic events<span class="tab-count" id="quake-count">—</span></button></div><span class="atlas-index"><span class="live-dot"></span> THE WORLD, IN CONTEXT</span></div>
+<section class="workspace" aria-label="Interactive atlas">
+<aside class="sidebar">
+<div class="sidebar-heading"><span class="eyebrow">YOUR EXPLORATION</span><button id="reset-filters" class="text-button">Reset <svg class="icon"><use href="#i-reset"/></svg></button></div>
+<h2 id="layer-title">Aviation incidents</h2><p class="layer-description" id="layer-description">A century of flight. The moments that changed its course.</p>
+<div class="filter-field"><label for="region">REGION</label><select id="region"><option value="world">Worldwide</option><option value="northAmerica">North America</option><option value="southAmerica">South America</option><option value="europe">Europe</option><option value="africa">Africa</option><option value="asia">Asia</option><option value="oceania">Oceania</option></select></div>
+<div class="filter-field"><label id="severity-label" for="severity">INCIDENT SEVERITY</label><select id="severity"><option value="all">All incidents</option><option value="fatal">Fatal incidents</option><option value="100">100+ fatalities</option><option value="300">300+ fatalities</option><option value="nonfatal">No fatalities reported</option></select></div>
+<div class="filter-field date-filter"><label>DATE RANGE</label><div class="date-inputs"><div><span>From</span><input id="year-start" type="number" value="1950" min="1908" max="2019" aria-label="Start year"></div><span class="date-divider">—</span><div><span>To</span><input id="year-end" type="number" value="2019" min="1908" max="2019" aria-label="End year"></div></div><label class="checkbox-label" id="unknown-label" hidden><input type="checkbox" id="include-unknown" checked> Include undated wrecks</label></div>
+<div class="overview"><span class="eyebrow">IN THIS VIEW</span><div class="stat-main"><strong id="visible-count">—</strong><span id="stat-main-label">mapped incidents</span></div><div class="stat-bottom"><span id="secondary-label">Lives lost onboard</span><strong id="secondary-value">—</strong></div></div>
+<button class="story-promo" id="story-promo"><img src="assets/flight.jpg" alt="An aircraft wing above a sea of clouds"><span class="promo-shade"></span><span class="promo-content"><span class="eyebrow">BEYOND THE NUMBERS</span><strong>Every point.<br>A human story.</strong><span class="promo-link">Discover notable stories <svg class="icon"><use href="#i-arrow"/></svg></span></span></button>
+<button class="source-note" id="sources-button"><svg class="icon"><use href="#i-info"/></svg><span>Real records. A considered perspective.<br><u>Data sources & coverage</u></span></button>
+</aside>
+<div class="map-column">
+<div class="map-stage" id="map-stage">
+<svg id="world-map" aria-label="Interactive world map. Drag to pan, scroll to zoom, and select a dot to explore a record." role="img" tabindex="0"><defs><pattern id="ocean-pattern" width="8" height="8" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r=".45" fill="#c9cfca" opacity=".4"/></pattern></defs><rect width="100%" height="100%" fill="url(#ocean-pattern)"/><g id="map-transform"><g id="graticule"></g><g id="countries"></g><g id="map-labels"></g><g id="markers"></g><g id="selected-marker"></g></g></svg>
+<div class="map-title"><span class="live-dot"></span><span id="map-caption">AVIATION INCIDENTS</span><span class="map-title-divider"></span><span id="map-date">1950 — 2019</span></div>
+<div class="map-tools"><button id="zoom-in" aria-label="Zoom in"><svg class="icon"><use href="#i-plus"/></svg></button><button id="zoom-out" aria-label="Zoom out"><svg class="icon"><use href="#i-minus"/></svg></button><span></span><button id="reset-view" aria-label="Reset world view"><svg class="icon"><use href="#i-target"/></svg></button></div>
+<div class="compass" aria-hidden="true"><span>N</span><svg viewBox="0 0 36 36"><path d="m18 3 6 24-6-5-6 5Z" fill="#3d463e"/><path d="m18 3 6 24-6-5Z" fill="#aeb6ac"/></svg></div>
+<div class="map-hint" id="map-hint"><svg class="icon"><use href="#i-target"/></svg> A point on the map. A story to uncover.</div>
+<div class="map-tooltip" id="map-tooltip" role="status" hidden></div>
+<div class="map-empty" id="map-empty" hidden><svg class="icon"><use href="#i-search"/></svg><strong>No records in this view</strong><p>Try a wider date range or another filter.</p><button id="empty-reset">Reset filters</button></div>
+<article class="record-card" id="record-card" aria-label="Selected incident details" hidden></article>
+<div class="map-bottom"><div class="map-legend"><span class="legend-dot"></span><span id="legend-title">Recorded incident</span><span class="legend-circles"><i></i><i></i><i></i></span><span id="legend-scale">Size = fatalities</span></div><div class="map-attribution">Natural Earth · <span id="map-source">Historical aviation archive</span></div></div>
+</div>
+<div class="timeline"><div class="timeline-heading"><div><svg class="icon"><use href="#i-layers"/></svg><strong>Explore through time</strong><span>Drag the range to reveal a different era.</span></div><div class="timeline-actions"><span id="timeline-range">1950 — 2019</span><button id="play-timeline" aria-label="Play timeline"><svg class="icon" viewBox="0 0 24 24"><path d="m8 5 11 7-11 7Z"/></svg></button></div></div><div class="histogram" id="histogram" aria-hidden="true"></div><div class="range-controls"><input type="range" id="range-start" min="1908" max="2019" value="1950" aria-label="Timeline start year"><input type="range" id="range-end" min="1908" max="2019" value="2019" aria-label="Timeline end year"></div><div class="timeline-ticks" id="timeline-ticks"></div></div>
+</div>
+</section>
+<footer class="page-footer"><span><span class="footer-cross">✳</span> Curiosity, with coordinates.</span><span>Made to explore. Built to remember.<span class="footer-separator">/</span><button id="footer-about">Fallen Atlas — Vol. 01 <svg class="icon"><use href="#i-arrow"/></svg></button></span></footer>
+</main>
+<dialog id="search-dialog" class="search-dialog"><div class="dialog-top"><span class="eyebrow">SEARCH THE ARCHIVE</span><button class="close-dialog icon-button" aria-label="Close search"><svg class="icon"><use href="#i-close"/></svg></button></div><div class="search-field"><svg class="icon"><use href="#i-search"/></svg><input id="archive-search" type="search" placeholder="A place, a flight, a ship, a story…" autocomplete="off" aria-label="Search all records"></div><div class="search-meta" id="search-meta">Search across all three collections.</div><div id="search-results" class="search-results"></div></dialog>
+<dialog id="info-dialog" class="info-dialog"><div class="dialog-top"><span class="eyebrow">THE WORLD, IN CONTEXT</span><button class="close-dialog icon-button" aria-label="Close information"><svg class="icon"><use href="#i-close"/></svg></button></div><div id="info-content"></div></dialog>
+<div class="toast" id="toast" role="status" hidden></div>
+<script src="assets/d3.min.js"></script><script src="data/world.js"></script><script src="data/aviation.js"></script><script src="data/wrecks.js"></script><script src="data/earthquakes.js"></script><script src="app.js"></script>
+</body></html>
